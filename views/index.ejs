@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="./styles/style.css">
+
+    <title>Clash of Clans Clan Info</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">💎 FWA Stats</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Clan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Syncs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Players</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Data</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav navbar-right">
+                    <li><a class="nav-link" href="/Account/Login">Login</a></li>
+                    <li><a class="nav-link" href="/Home/About">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content fill">
+        <div class="row">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb custom-breadcrumb my-3">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="#">Clan</a></li>
+                </ol>
+            </nav>
+            
+            <!-- Clan List table  -->
+            <div>
+                <div class="table-card mb-3 container">
+                    <br>
+                    <h2 class="card-title mb-3 text-center"><%= data.length %> FWA CLANS INFO</h2>
+
+                    <div class="row">
+                        <!-- Buttons -->
+                        <div class="col-md-6">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-primary active"> Active </button>
+                                <button type="button" class="btn btn-outline-primary"> Departed </button>
+                                <button type="button" class="btn btn-outline-primary"> Following </button>
+                                <button type="button" class="btn btn-outline-primary"> My clans </button>
+                            </div>
+                        </div>
+
+                        <!-- Search -->
+                        <div class="col-md-6">
+                            <div class="input-group input-group-sm mb-3 justify-content-end">
+                                <span class="input-group-text" id="basic-addon1">&#128269;</span>
+                                <input type="text" class="form-control" placeholder="Search" aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-bordered table-striped boundry">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col" data-column="clan-name" data-order="desc">CLAN</th>
+                                    <th scope="col" data-column="tag" data-order="desc">TAG</th>
+                                    <th scope="col" data-column="players" data-order="desc">PLAYERS</th>
+                                    <th scope="col" data-column="clan-level" data-order="desc">LEVEL</th>
+                                    <th scope="col" data-column="clan-type" data-order="desc">TYPE</th>
+                                    <th scope="col" data-column="required-bbt" data-order="desc">RBBT</th>
+                                    <th scope="col" data-column="required-vbt" data-order="desc">RVBT</th>
+                                    <th scope="col" data-column="required-th" data-order="desc">RTH</th>
+                                    <th scope="col" data-column="total-wars" data-order="desc">WARS</th>
+                                    <th scope="col" data-column="win-wars" data-order="desc">WIN</th>
+                                    <th scope="col" data-column="tie-wars" data-order="desc">TIES</th>
+                                    <th scope="col" data-column="loss-wars" data-order="desc">LOSS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                <!-- Loop through clan data -->
+                                <% data.forEach(clan=> { %>
+                                    <tr>
+                                        <td >
+                                            <a class="fix-anchor" href="/<%=encodeURIComponent((clan.tag).replace('#', ''))%>">
+                                                <img width="35" height="35" src="<%= clan.badgeUrls.small %>"
+                                                    alt="<%= clan.name %> Logo" class="clan-logo">
+                                                <%= clan.name %>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <%= clan.tag %>
+                                        </td>
+                                        <td>
+                                            <%= clan.members %>
+                                        </td>
+                                        <td>
+                                            <%= clan.clanLevel %>
+                                        </td>
+                                        <td>
+                                            <%= clan.type %>
+                                        </td>
+                                        <td>
+                                            <%= clan.requiredBuilderBaseTrophies %>
+                                        </td>
+                                        <td>
+                                            <%= clan.requiredVersusTrophies %>
+                                        </td>
+                                        <td>
+                                            <%= clan.requiredTownhallLevel %>
+                                        </td>
+                                        <% const totalWars=(clan.warWins ? clan.warWins : 0) + (clan.warTies ?
+                                            clan.warTies : 0) + (clan.warLosses ? clan.warLosses : 0); %>
+                                            <td
+                                                class="<%= totalWars === 0 && clan.warWins!== 0 ? 'bg-danger text-light' : '' %>">
+                                                <%= totalWars %>
+                                            </td>
+                                            <td>
+                                                <%= clan.warWins ? clan.warWins : 0 %>
+                                            </td>
+                                            <td>
+                                                <%= clan.warTies ? clan.warTies : 0 %>
+                                            </td>
+                                            <td>
+                                                <%= clan.warLosses ? clan.warLosses : 0 %>
+                                            </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+
+                        <div id="noMatchMessage" class="text-center alert alert-info" style="display: none;">
+                            No match found!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
